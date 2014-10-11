@@ -1,4 +1,4 @@
-cp lrsunDsp.so /lib -rf
+cp libDsp.so /lib -rf
 
 ./webs -demo
 

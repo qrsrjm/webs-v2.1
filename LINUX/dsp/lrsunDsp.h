@@ -474,6 +474,7 @@ int saveArchive(char *name);
 void readAllArchiveName(char *str);
 void readMachine(MACINFO *mac);
 int initLoadArchive(char *name);
+int reLoadArchive(char *name);
 
 
 /*
@@ -504,33 +505,33 @@ void outVolToStr(char *dest);
   */
 #if 1 //test info show
 
-void showInputVol(VOL_OP *p);
+void showInputVol(int dr);
 
-void showOutputVol(fp32 *p);
+void showOutputVol(int dr);
 
-void showOutDly(Outdly *p);
-void showEQ(EQOP_STR *p);
+void showOutDly(int dr);
+void showEQ(int dr);
 
-void showAchEQ(EQOP_STR *p);
+void showAchEQ(int dr);
 
-void showBchEQ(EQOP_STR p[][7]);
+void showBchEQ(int dr);
 
 
-void showLimit(LimiterOP_STR *p);
-void show3D(Music3DOp_STR *p);
+void showLimit(int dr);
+void show3D(int dr);
 
-void showSctHLpf(HLPF_STR *p);
-void showSctBpf(BPF_STR *p);
-void showAgc(DRC_STR *p);
-//void showSct(SCTDATA_STR *p);
+void showSctHLpf(int dr);
+void showSctBpf(int dr);
+void showAgc(int dr);
+void showSct(int dr);
 
-void showHLpf(CHanHLPF_STR *p, uint8_t hl);
+void showHLpf(int dr);
 
-void showBpf(BPF_OP *p);
+void showBpf(int dr);
 
-void showAD(AnaOrDigSrc_STR *p);
+void showAD(int dr);
 
-void showCrossbar1(Crossbar_STR *p);
+void showCrossbar1(int dr);
 
 
 #endif //test info show

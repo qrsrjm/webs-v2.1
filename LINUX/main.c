@@ -128,6 +128,7 @@ static void formRead(webs_t wp, char_t *path, char_t *query);      //<!---¶Á´æµµ
 static void formShowInfo(webs_t wp, char_t *path, char_t *query);  //<!---ÏÔÊ¾´æµµ--->	
 static void formAllByPass(webs_t wp, char_t *path, char_t *query); //<!---all bypass ËùÓÐÄ£¿é--->
 static void formArchive(webs_t wp, char_t *path, char_t *query);
+static void formReLoadArchive(webs_t wp, char_t *path, char_t *query);
 
 #if 0
 void repACHEQ(EQOP_STR *p);
@@ -408,6 +409,7 @@ static int initWebs(int demo)
     websFormDefine(T("formAllByPass"), formAllByPass);
     websFormDefine(T("formArchive"), formArchive);
 
+    websFormDefine(T("formReLoadArchive"), formReLoadArchive);
 
 	websUrlHandlerDefine(T("/ajax"), NULL, 0, websAjaxHandler, 0);
 	
@@ -1794,6 +1796,47 @@ static void formArchive(webs_t wp, char_t *path, char_t *query)
 
 
 /******************************************************************************/
+/*   by qmd 2014.10.11
+ *  Test form for posted data (in-memory CGI). This will be called when the
+ *  form in web/forms.asp is invoked. Set browser to "localhost/forms.asp" to test.
+ */
+static void formReLoadArchive(webs_t wp, char_t *path, char_t *query)
+{
+    char_t  *fileName;
+    fileName =    websGetVar(wp, T("name"), T(""));
+
+    websHeader(wp);
+
+    printf("strlen()=%d,cmp=%d\n",strlen(fileName),strcmp(fileName,T("")));
+
+    if (*fileName == '\0') {
+        //websWrite(wp, T("<body>Name is empty, please re-enter<h2></h2>\n"));
+        //websFooter(wp);
+        //websDone(wp, 200);
+        printf("==0\n");
+    }
+    
+    if(fileName==NULL) printf("==null\n");
+    
+    
+    int ret = reLoadArchive(fileName);
+    
+    if (ret == -1) {  
+        websWrite(wp, T("<body>Without this archive <h2></h2>\n"));         
+    } else if (ret== -2) {
+        websWrite(wp, T("<body>No archive, create it <h2></h2>\n"));
+    } else if (ret== -3) {
+        websWrite(wp, T("<body>Name is empty, please re-enter<h2></h2>\n"));
+    }
+    
+    websFooter(wp);
+    websDone(wp, 200);
+    
+    printf("%s> start load %s.\n",__FUNCTION__,fileName);
+}
+
+
+/******************************************************************************/
 /*   by qmd 2014.9.30
  *  Test form for posted data (in-memory CGI). This will be called when the
  *  form in web/forms.asp is invoked. Set browser to "localhost/forms.asp" to test.
@@ -1801,6 +1844,25 @@ static void formArchive(webs_t wp, char_t *path, char_t *query)
 static void formShowInfo(webs_t wp, char_t *path, char_t *query)
 {   
     printf("=>%s dspInfo\n",__FUNCTION__);
+
+    int i;
+    for(i=0;i<2;i++) {
+        showInputVol(i);
+        showOutputVol(i);
+        showOutDly(i);
+        showAchEQ(i);
+        showBchEQ(i);
+        showLimit(i);
+        show3D(i);
+        showSct(i);
+        showHLpf(i);
+        //showHLpf(i);
+        showBpf(i);
+        showAD(i);
+        showCrossbar1(i);
+    }
+
+#if 0
     showInputVol(dspInfo.vol);
 	showOutputVol(dspInfo.outVol);
 	showOutDly(dspInfo.outDly);
@@ -1830,7 +1892,7 @@ static void formShowInfo(webs_t wp, char_t *path, char_t *query)
 	showBpf(&(rDspInfo->bpf));
 	showAD(&(rDspInfo->ad));
     showCrossbar1(rDspInfo->crossbar1);
-
+#endif
 }
 
 

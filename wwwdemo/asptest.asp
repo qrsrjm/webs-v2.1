@@ -101,6 +101,14 @@
 	<hr/>
 
 	<iframe style="display: none" id="rfFrame"  name="rfFrame" src="about:blank"></iframe> <!--让表单提交后不刷新页面-->
+		<h1>GoForm reload</h1> 
+		<form name="reload" action="/goform/formReLoadArchive" method="post" target="rfFrame">
+			name	 <input type="text"  name="name"/><br/>
+			     <input name="" type="submit"/>
+		</form>
+	<hr/>
+
+	<iframe style="display: none" id="rfFrame"  name="rfFrame" src="about:blank"></iframe> <!--让表单提交后不刷新页面-->
 		<h1>GoForm Crossbar1</h1> 
 		<form name="Crossbar1" action="/goform/formCrossbar1" method="post" target="rfFrame">
 			rd:	 <input type="text"  name="rd"/><br/>
